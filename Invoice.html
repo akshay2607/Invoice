@@ -1,0 +1,137 @@
+<!--
+Author: Akshay Krishna Radhakrishna
+email: akshay.radhakrishna@gmail.com
+-->
+<!DOCTYPE html>
+<html ng-app="invoiceApp">
+    <head>
+        <link rel="stylesheet" href="css/bootstrap.css"/>
+        <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,200,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/invoice.css"/>
+        <script type="text/javascript" src="js/Libraries/jquery-1.12.0.min.js"></script>
+        <script type="text/javascript" src="js/Libraries/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/Libraries/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.js"></script>
+        <script type="text/javascript" src="js/Data/data.js"></script>
+        <script type="text/javascript" src="js/Controllers/app.js"></script>
+        <script type="text/javascript" src="js/Controllers/addInvoiceCtrl.js"></script>
+        <script type="text/javascript" src="js/Filters/sum.js"></script>
+    </head>
+    <body ng-controller="invoiceCtrl">
+        <main class="row shadow">
+            <div class="col-md-2">
+                <section id="title" class="inner-shadow">
+                    <div><span class="glyphicon glyphicon-list" aria-hidden="true"></span> INVOICE</div>
+                </section>
+                <section id="btn-set" class="inner-shadow">
+                    <ul class="nav nav-stacked">
+                       <li class="inner-shadow"><a class="active" ng-click="makeActive($event, 'show-invoice')"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<br>View Invoice</a></li>
+                        <li class="inner-shadow"><a ng-click="makeActive($event, 'add-invoice')"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;<br>Add Invoice</a></li>
+                        <li class="inner-shadow"><a ng-click="makeActive($event, 'trash')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;<br>Trash</a></li>
+                    </ul>
+                </section>
+            </div>
+            <div class="col-md-10 container">
+                <div id="container-header" class="row">
+                    <div class="col-md-6"><b>{{head}}</b></div>
+                    <div class="col-md-5" ng-show="showContainer != 'add-invoice'">
+                       <div class="float-right">
+                           <span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;
+                           <input type="text" id="search-invoice" placeholder="Search invoice" ng-model="invQuery">
+                        </div>
+                    </div>
+                </div>
+                <div id="show-invoice" ng-show="showContainer == 'show-invoice'">
+                    <p class="no-show" ng-show="invNum=='1'">Nothing more to show</p>
+                    <div>
+                        <div class="cards shadow" ng-repeat="invoice in invoices|filter: invQuery" ng-if="invoice.status == true">
+                            <span class="invoice-num">{{invoice.invoiceNo}}</span>
+                            <span class="invoice-del glyphicon glyphicon-trash" ng-click="toggleInvoice(invoice)" aria-hidden="true"></span>
+                            <br><br>
+                            <span class="invoice-big"><b>{{invoice.cName}}</b></span>
+                            <span class="invoice-big invoice-total"><b>{{invoice.total|currency}}</b></span>
+                            <p>{{invoice.date}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="add-invoice" ng-controller="addInvoiceCtrl" ng-show="showContainer == 'add-invoice'">
+                    <form id="invoiceForm">
+                        <h3 style="text-align:center">INVOICE</h3>
+                        <label>Customer Name: &nbsp;</label>
+                        <input type="text" style="width: 70%" placeholder="Enter customer name" ng-model="customer" required/><br>
+                        <label>Invoice Number: <input type="number" placeholder="{{invNum}}" min="{{invNum}}" ng-model="invNum" required></label>
+                        <label>Date: <input type="date" value="{{date}}" id="date" required></label><br>
+                        <label>Products:&nbsp;
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="productDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Select
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="productDropdown">
+                                    <li>
+                                      <input type="text" id="query" ng-model="query">
+                                    </li>
+                                    <li ng-repeat="prod in products | filter:query">
+                                        <div id="prod{{prod.id}}" class="product" data-ng-click="toggleProduct($index, prod)" ng-class="{'selected':outputProducts[prod.id]}">
+                                            {{prod.name}}
+                                            <span class="glyphicon glyphicon-ok checkbox shadow" aria-hidden="true"></span>
+                                        </div>
+                                    </li> 
+                                </ul>
+                            </div>
+                            <span ng-show="invalidProduct" style="color:#DD4D41">Please select products</span>
+                        </label>
+                        <div class="product-line">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Product Name</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="prod in outputProducts">
+                                        <td>
+                                            <span class="glyphicon glyphicon-remove" ng-click="delete(prod)" aria-hidden="true"></span>
+                                        </td>
+                                        <td>
+                                            {{prod.name}}
+                                        </td>
+                                        <td>
+                                            <input type="number" value="{{prod.quantity}}" min="1" ng-model="prod.quantity">
+                                        </td>
+                                        <td>
+                                           <input type="number" value="{{prod.cost}}" min="1" ng-model="prod.cost">
+                                        </td>
+                                        <td>
+                                            {{prod.quantity * prod.cost|currency}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <span style="float:right">Total: {{outputProducts| sum |currency}}</span><br>
+                        <button class="btn btn-sm btn-default" ng-disabled="form.$invalid" id="save" ng-click="saveInvoice()" >Save</button>
+                        <span ng-show="saveSuccess">Successfully saved!</span>
+                    </form>
+                </div>
+                <div id="trash" ng-show="showContainer == 'trash'">
+                    <div>
+                        <div class="cards shadow" ng-repeat="invoice in invoices" ng-if="invoice.status == false">
+                            <span class="invoice-num">{{invoice.invoiceNo}}</span>
+                            <span class="invoice-del glyphicon glyphicon-repeat" ng-click="toggleInvoice(invoice)" aria-hidden="true"></span>
+                            <br><br>
+                            <span class="invoice-big"><b>{{invoice.cName}}</b></span>
+                            <span class="invoice-big invoice-total"><b>{{invoice.total|currency}}</b></span>
+                            <p>{{invoice.date}}</p>
+                        </div>
+                    </div>
+                    <p class="no-show">Nothing more to show</p>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,308 @@
+body{
+    background-color: #DDE4EA;
+    font-family:'Titillium Web', sans-serif;
+    padding: 2% 25% 0;
+}
+
+main{
+    border-radius: 5px;
+    height: 80vh;
+    width: 100%;
+    min-height: 500px;
+    min-width: 660px;
+    overflow: hidden;
+}
+
+/* Start: General */
+.shadow{
+    -webkit-box-shadow: 0px 0px 9px -4px rgba(54,53,54,1);
+    -moz-box-shadow: 0px 0px 9px -4px rgba(54,53,54,1);
+    box-shadow: 0px 0px 9px -4px rgba(54,53,54,1);
+}
+
+.inner-shadow{
+    -webkit-box-shadow: inset 0px 0px 9px -4px rgba(54,53,54,1);
+    -moz-box-shadow: inset 0px 0px 9px -4px rgba(54,53,54,1);
+    box-shadow: inset 0px 0px 9px -4px rgba(54,53,54,1);
+}
+
+input{
+    padding: 5px; 
+}
+
+h3{
+    margin-top: 10px;
+}
+
+label{
+    padding: 5px;
+}
+
+main>div{
+    height: 100%;
+}
+
+.col-md-2{
+    padding: 0;
+}
+
+.float-right{
+    float: right;
+}
+
+.ng-leave,
+.ng-hide-add{
+    animation: 0s fadeOut ease-out;
+    
+}
+
+.ng-enter, 
+.ng-hide-remove{
+    animation: 1s fadeIn ease-in;
+}
+
+@keyframes fadeOut{
+    0% {opacity: 1}
+    100% {opacity: 0;}
+}
+
+@keyframes fadeIn{
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+
+
+/* End: General */
+
+/* Start: Menu section */
+#title{
+    background-color: #FF6A6C; /*#00BFE4;*/
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 600;
+    height: 20%;
+    position: relative;
+    text-align: center;
+}
+
+#title div{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    -webkit-transform: translateY(-50%) translateX(-50%);
+}
+
+#btn-set{
+    background-color: #77818D;
+    height: 80%;
+}
+
+.nav-stacked li{
+    border-bottom: 1px solid #556370;
+    margin-top: 0px !important;
+    text-align: center;
+}
+
+.nav-stacked li a{
+    color: #BFC6D0;
+    cursor: pointer;
+    transition: background-color 0.5s;
+    -webkit-transition: background-color 0.5s;
+}
+
+.nav li:hover a, .nav .active{
+    background-color: rgba(0,0,0, 0.2);
+}
+ 
+/* End: Menu section */
+
+/* Start: Container section */
+
+.container{
+    background-color: #F2F2F2;
+}
+
+#container-header{
+    background-color: #D2D7DD;
+    height: 8%;
+    padding-top: 5px;
+}
+
+.checkBoxContainer{
+    overflow: auto !important;
+    max-height: 100px;
+    overflow-y: scroll !important;
+}
+
+.product-search{
+    display: inline-block;
+}
+
+.product-line{
+    max-height: 170px;
+    min-height: 170px;
+    overflow-y: scroll;
+}
+
+#query{
+    position: sticky;
+}
+
+.product-line .table thead{
+    background: #D2D7DD;
+}
+
+.product{
+    background: #F8F8F8;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.product:hover, .selected{
+    background: #77818D;
+    color: #F2F2F2;
+    transition: background 0.5s, color 0.5s;
+    -webkit-transition: background 0.5s, color 0.5s;
+}
+
+tr input{
+    width: 80px;
+    padding: 1px;
+}
+
+.dropdown{
+    display: inline-block;
+}
+
+.dropdown-menu{
+    max-height: 250px;
+    overflow-y: scroll;
+}
+.selected .checkbox{
+    color: #77818D;
+    transition: color 0.5s;
+    -webkit-transition: color 0.5s;
+}
+
+
+
+.ng-touched.ng-invalid{
+    border-color: rgba(221,77,65,0.7);
+    transition: border-color 0.5s;
+    -webkit-transition: border-color 0.5s;
+}
+
+.dropdown-menu{
+    padding: 10px;
+}
+
+.checkbox{
+    background-color: #E0E0E0;
+    color: #E0E0E0;
+    font-size: 10px;
+    float: right;
+    margin-top: 4px;
+    
+}
+
+.glyphicon-remove:hover{
+    color: #FF6A6C;
+    cursor: pointer;
+    transition: color 0.5s;
+    -webkit-transition: color 0.5s;
+}
+
+#add-invoice{
+    background-color: #F8F8F8;
+    color: #5F6771;
+    height: 85%;
+    margin: 10px 0;
+    padding: 15px;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+}
+
+#add-invoice:before{
+    content: "foo";
+    color: transparent;
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    top: 5px;
+    bottom: 5px;
+    border: 1px dashed #D2D7DD;
+    z-index: -2;
+}
+
+#save{
+    margin-left: 50%;
+    margin-top: 10px;
+}
+
+/* End: Container section */
+
+/* Start: Show Invoice */
+#show-invoice{
+    color: #77818D;
+    min-height: 420px;
+    max-height: 420px;
+    overflow-y: scroll;
+    padding: 10px !important;
+}
+
+.no-show{
+    margin-top: 40%;
+    text-align: center
+}
+
+.cards{
+    background-color: #F8F8F8;
+    display: inline-block;
+    margin: 3px;
+    padding: 10px;
+    width: 48%;
+    height: 100%;
+}
+
+.invoice-num{
+    background: #77818D;
+    color: #F2F2F2;
+    padding: 5px;
+    width: 20px;
+}
+
+.invoice-del{
+    cursor: pointer;
+    float: right;
+}
+
+.invoice-del:hover{
+    color: #FF6A6C;
+}
+
+.invoice-big{
+    font-size: 15px;
+}
+
+.invoice-total{
+    float:right;
+}
+
+#search-invoice{
+    border-radius: 15px;
+    border: 0;
+    background-color: #F2F2F2;
+    color: #77818D;
+}
+
+/* End: Show Invoice */
+
+/* Start: Trash */
+#trash{
+    min-height: 420px;
+    max-height: 420px;
+    overflow-y: scroll;
+}
+/* End: Trash */
